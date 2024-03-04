@@ -47,12 +47,12 @@ public class Post {
     @ManyToOne
     @CreatedBy
     @JoinColumn(name = "CREATE_BY", referencedColumnName = "ID", nullable = false)
-    private Member createdBy;
+    private Member createBy;
 
     @ManyToOne
     @LastModifiedBy
     @JoinColumn(name = "UPDATE_BY", referencedColumnName = "ID", nullable = false)
-    private Member updatedBy;
+    private Member updateBy;
 
     // Getters and Setters
 }

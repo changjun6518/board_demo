@@ -1,14 +1,20 @@
 package com.jj.demo.config.auditing;
 
+import com.jj.demo.member.MemberRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.AuditorAware;
 
 @Configuration
 public class JpaConfig {
 
+    private final MemberRepository memberRepository;
+
+    public JpaConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
     @Bean
-    public AuditorAware<String> auditorProvider() {
-        return new SpringSecurityAuditorAware();
+    public SpringSecurityAuditorAware auditorProvider() {
+        return new SpringSecurityAuditorAware(memberRepository);
     }
 }

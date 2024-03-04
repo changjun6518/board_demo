@@ -1,5 +1,6 @@
 package com.jj.demo.member;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -7,11 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberRepository memberRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public MemberDto createMember(MemberDto memberDto) {
+        memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         Member member = MemberMapper.INSTANCE.memberDtoToMember(memberDto);
         member = memberRepository.save(member);
         return MemberMapper.INSTANCE.memberToMemberDto(member);

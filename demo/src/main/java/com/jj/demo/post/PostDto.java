@@ -1,7 +1,9 @@
 package com.jj.demo.post;
 
 import java.time.LocalDateTime;
+import lombok.Data;
 
+@Data
 public class PostDto {
     private Long id;
     private String title;
