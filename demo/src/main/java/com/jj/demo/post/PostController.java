@@ -1,5 +1,6 @@
 package com.jj.demo.post;
 
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,12 @@ public class PostController {
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
         PostDto newPost = postService.createPost(postDto);
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PostDto>> getPostAll() {
+        List<PostDto> postDtoList = postService.getPostAll();
+        return ResponseEntity.ok(postDtoList);
     }
 
     @GetMapping("/{id}")

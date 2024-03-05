@@ -1,5 +1,6 @@
 package com.jj.demo.post;
 
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -10,6 +11,8 @@ public interface PostMapper {
 
     PostDto postToPostDto(Post post);
     Post postDtoToPost(PostDto postDto);
+
+    List<PostDto> postListToPostDtoList(List<Post> post);
 
     void updateFromDto(@MappingTarget Post post, PostDto postDto);
 }

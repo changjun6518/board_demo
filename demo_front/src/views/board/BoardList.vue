@@ -13,11 +13,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(row, idx) in list" :key="idx">
-        <td>{{ row.idx }}</td>
-        <td><a v-on:click="fnView(`${row.idx}`)">{{ row.title }}</a></td>
-        <td>{{ row.author }}</td>
-        <td>{{ row.created_at }}</td>
+      <tr v-for="(row, id) in list" :key="id">
+        <td>{{ row.id }}</td>
+        <td><a v-on:click="fnView(`${row.id}`)">{{ row.title }}</a></td>
+        <td>{{ row.createBy.nickname }}</td>
+        <td>{{ row.createDt }}</td>
       </tr>
       </tbody>
     </table>
@@ -79,26 +79,40 @@ export default {
   },
   methods: {
     fnGetList() {
-      this.list = [
-        {
-          "idx":1,
-          "title": "제목1",
-          "author": "작성자1",
-          "created_at": "작성일시1"
+      this.$axios.get(this.$serverUrl + "/posts", {
+        params: this.requestBody,
+        auth: {
+          username: 'june',
+          password: 1234
         },
-        {
-          "idx":1,
-          "title": "제목1",
-          "author": "작성자1",
-          "created_at": "작성일시1"
-        },
-        {
-          "idx":1,
-          "title": "제목1",
-          "author": "작성자1",
-          "created_at": "작성일시1"
+        headers: {}
+      }).then((res) => {
+
+        this.list = res.data  //서버에서 데이터를 목록으로 보내므로 바로 할당하여 사용할 수 있다.
+        console.log(res.data);
+      }).catch((err) => {
+        if (err.message.indexOf('Network Error') > -1) {
+          alert('네트워크가 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
         }
-      ]
+      })
+    },
+    fnView(id) {
+      this.requestBody.id = id
+      this.$router.push({
+        path: './detail',
+        query: this.requestBody
+      })
+    },
+    fnWrite() {
+      this.$router.push({
+        path: './write'
+      })
+    },
+    fnPage(n) {
+      if (this.page !== n) {
+        this.page = n
+        this.fnGetList()
+      }
     }
   }
 }

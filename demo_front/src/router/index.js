@@ -3,6 +3,7 @@ import PageHome from '@/views/PageHome.vue'
 import PageAbout from '@/views/PageAbout'
 import BoardList from "@/views/board/BoardList";
 import PageLogin from "@/views/PageLogin";
+import BoardDetail from "@/views/board/BoardDetail";
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: '/board/list',
     name: 'BoardList',
     component: BoardList
+  },
+  {
+    path: '/board/detail',
+    name: 'BoardDetail',
+    component: BoardDetail
   },
   {
     path: '/login',

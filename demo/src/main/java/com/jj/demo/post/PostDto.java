@@ -1,5 +1,6 @@
 package com.jj.demo.post;
 
+import com.jj.demo.member.MemberDto;
 import java.time.LocalDateTime;
 import lombok.Data;
 
@@ -10,8 +11,8 @@ public class PostDto {
     private String description;
     private LocalDateTime createDt;
     private LocalDateTime updateDt;
-    private Long createdById;
-    private Long updatedById;
+    private MemberDto createBy;
+    private MemberDto updateBy;
 
     // Getters and Setters
 }

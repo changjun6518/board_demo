@@ -1,5 +1,6 @@
 package com.jj.demo.post;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,11 @@ public class PostService {
     public PostDto getPostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow();
         return PostMapper.INSTANCE.postToPostDto(post);
+    }
+
+    public List<PostDto> getPostAll() {
+        List<Post> postList = postRepository.findAll();
+        return PostMapper.INSTANCE.postListToPostDtoList(postList);
     }
 
     @Transactional
