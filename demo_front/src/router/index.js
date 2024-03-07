@@ -4,6 +4,7 @@ import PageAbout from '@/views/PageAbout'
 import BoardList from "@/views/board/BoardList";
 import PageLogin from "@/views/PageLogin";
 import BoardDetail from "@/views/board/BoardDetail";
+import BoardWrite from "@/views/board/BoardWrite";
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/board/detail',
     name: 'BoardDetail',
     component: BoardDetail
+  },
+  {
+    path: '/board/write',
+    name: 'BoardWrite',
+    component: BoardWrite
   },
   {
     path: '/login',
