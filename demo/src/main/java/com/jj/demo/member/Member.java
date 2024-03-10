@@ -20,7 +20,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "MEMBERS")
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
@@ -37,12 +36,12 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String nickname;
 
-    @CreatedDate
-    @Column(name = "CREATE_DT", nullable = false)
-    private LocalDateTime createDt;
-
-    @LastModifiedDate
-    @Column(name = "UPDATE_DT", nullable = false)
-    private LocalDateTime updateDt;
+//    @CreatedDate
+//    @Column(name = "CREATE_DT", nullable = false)
+//    private LocalDateTime createDt;
+//
+//    @LastModifiedDate
+//    @Column(name = "UPDATE_DT", nullable = false)
+//    private LocalDateTime updateDt;
 
 }

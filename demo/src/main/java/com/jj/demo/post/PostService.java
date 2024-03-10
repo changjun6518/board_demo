@@ -1,7 +1,14 @@
 package com.jj.demo.post;
 
+import com.jj.demo.common.model.CustomResponse;
+import com.jj.demo.common.model.Pagination;
+import jakarta.persistence.PreUpdate;
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -12,6 +19,7 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
+    @Transactional
     public PostDto createPost(PostDto postDto) {
         Post post = PostMapper.INSTANCE.postDtoToPost(postDto);
         post = postRepository.save(post);
@@ -23,15 +31,27 @@ public class PostService {
         return PostMapper.INSTANCE.postToPostDto(post);
     }
 
-    public List<PostDto> getPostAll() {
-        List<Post> postList = postRepository.findAll();
-        return PostMapper.INSTANCE.postListToPostDtoList(postList);
+    public CustomResponse<List<PostDto>> getPostAll(Pageable pageable) {
+        List<PostDto> dtos = new ArrayList<>();
+        Page<Post> postList = postRepository.findAllByOrderByIdDesc(pageable);
+        for (Post post : postList) {
+            PostDto postDto = PostMapper.INSTANCE.postToPostDto(post);
+            dtos.add(postDto);
+        }
+        Pagination pagination = new Pagination(
+                (int) postList.getTotalElements()
+                , pageable.getPageNumber() + 1
+                , pageable.getPageSize()
+                , 10
+        );
+        return CustomResponse.ok(dtos, pagination);
     }
 
     @Transactional
     public PostDto updatePost(Long id, PostDto postDto) {
         Post post = postRepository.findById(id).orElseThrow();
         PostMapper.INSTANCE.updateFromDto(post, postDto);
+        postRepository.save(post);
         return PostMapper.INSTANCE.postToPostDto(post);
     }
 

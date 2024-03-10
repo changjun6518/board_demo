@@ -1,6 +1,10 @@
 package com.jj.demo.post;
 
+import com.jj.demo.common.model.CustomResponse;
+import com.jj.demo.common.model.Pagination;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +25,8 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostDto>> getPostAll() {
-        List<PostDto> postDtoList = postService.getPostAll();
-        return ResponseEntity.ok(postDtoList);
+    public CustomResponse<List<PostDto>> getPostAll(@PageableDefault(sort = {"id"}) Pageable pageable) {
+        return postService.getPostAll(pageable);
     }
 
     @GetMapping("/{id}")

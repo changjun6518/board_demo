@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -31,6 +32,6 @@ public class UserService implements UserDetailsService {
         }
         System.out.println("앙");
         System.out.println("member.getNickname() = " + member.getNickname());
-        return new User(member.getNickname(), member.getPassword(), authorities);
+        return new CustomUserDetails(member, authorities);
     }
 }

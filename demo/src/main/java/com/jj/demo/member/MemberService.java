@@ -27,6 +27,11 @@ public class MemberService {
         return MemberMapper.INSTANCE.memberToMemberDto(member);
     }
 
+    public MemberDto getMemberByNickname(String nickname) {
+        Member member = memberRepository.findByNickname(nickname).orElseThrow();
+        return MemberMapper.INSTANCE.memberToMemberDto(member);
+    }
+
     @Transactional
     public MemberDto updateMember(Long id, MemberDto memberDto) {
         Member member = memberRepository.findById(id).orElseThrow();
