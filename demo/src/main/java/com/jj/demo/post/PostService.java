@@ -5,6 +5,7 @@ import com.jj.demo.common.model.Pagination;
 import jakarta.persistence.PreUpdate;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final PostRepositoryCustom postRepositoryCustom;
 
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
 
     @Transactional
     public PostDto createPost(PostDto postDto) {
@@ -34,6 +34,22 @@ public class PostService {
     public CustomResponse<List<PostDto>> getPostAll(Pageable pageable) {
         List<PostDto> dtos = new ArrayList<>();
         Page<Post> postList = postRepository.findAllByOrderByIdDesc(pageable);
+        for (Post post : postList) {
+            PostDto postDto = PostMapper.INSTANCE.postToPostDto(post);
+            dtos.add(postDto);
+        }
+        Pagination pagination = new Pagination(
+                (int) postList.getTotalElements()
+                , pageable.getPageNumber() + 1
+                , pageable.getPageSize()
+                , 10
+        );
+        return CustomResponse.ok(dtos, pagination);
+    }
+
+    public CustomResponse<List<PostDto>> getPostAll(Pageable pageable, SearchCondition searchCondition) {
+        List<PostDto> dtos = new ArrayList<>();
+        Page<Post> postList = postRepositoryCustom.findAllBySearchCondition(pageable, searchCondition);
         for (Post post : postList) {
             PostDto postDto = PostMapper.INSTANCE.postToPostDto(post);
             dtos.add(postDto);

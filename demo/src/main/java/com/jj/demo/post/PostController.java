@@ -25,8 +25,9 @@ public class PostController {
     }
 
     @GetMapping
-    public CustomResponse<List<PostDto>> getPostAll(@PageableDefault(sort = {"id"}) Pageable pageable) {
-        return postService.getPostAll(pageable);
+    public CustomResponse<List<PostDto>> getPostAll(@PageableDefault(sort = {"id"}) Pageable pageable,
+            SearchCondition searchCondition) {
+        return postService.getPostAll(pageable, searchCondition);
     }
 
     @GetMapping("/{id}")
