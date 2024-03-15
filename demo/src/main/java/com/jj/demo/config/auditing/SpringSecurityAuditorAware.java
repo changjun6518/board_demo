@@ -2,14 +2,11 @@ package com.jj.demo.config.auditing;
 
 import com.jj.demo.config.security.CustomUserDetails;
 import com.jj.demo.member.Member;
-import com.jj.demo.member.MemberRepository;
 import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 
-@Component
 public class SpringSecurityAuditorAware implements AuditorAware<Member> {
     @Override
     public Optional<Member> getCurrentAuditor() {

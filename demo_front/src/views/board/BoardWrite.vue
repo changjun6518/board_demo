@@ -39,10 +39,6 @@ export default {
       if (this.id !== undefined) {
         this.$axios.get(this.$serverUrl + '/posts/' + this.id, {
           params: this.requestBody,
-          auth: {
-            username: 'june',
-            password: 1234
-          },
         }).then((res) => {
           this.title = res.data.title
           this.description = res.data.description
@@ -78,10 +74,7 @@ export default {
         //INSERT
         this.$axios.post(apiUrl,
          this.form,
-  {auth: {
-           username: 'june',
-           password: 1234
-         },
+  {
           headers: {
             "Content-Type": "application/json",
           }
@@ -99,10 +92,7 @@ export default {
         console.log(this.form)
         this.$axios.put(apiUrl + `/${this.id}`,
             this.form,
-            {auth: {
-            username: 'june',
-            password: 1234
-          },
+            {
           headers: {
             "Content-Type": "application/json",
           }}

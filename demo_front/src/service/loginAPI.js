@@ -2,13 +2,13 @@ import axios from 'axios'
 
 const getUserInfo = (userId, userPw) => {
   const reqData = {
-    'user_id': userId,
-    'user_pw': userPw
+    'userId': userId,
+    'userPw': userPw
   }
 
   let serverUrl = 'http://localhost:8080'
 
-  return axios.post(serverUrl + '/login', reqData, {
+  return axios.post(serverUrl + '/user/login', reqData, {
     headers: {
       'Content-type': 'application/json'
     }

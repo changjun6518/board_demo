@@ -43,11 +43,7 @@ export default {
   methods: {
     fnGetView() {
       this.$axios.get(this.$serverUrl + '/posts/' + this.id, {
-        params: this.requestBody,
-        auth: {
-          username: 'june',
-          password: 1234
-        },
+        params: this.requestBody
       }).then((res) => {
         this.title = res.data.title
         this.author = res.data.createBy.nickname
@@ -75,12 +71,7 @@ export default {
     fnDelete() {
       if (!confirm("삭제하시겠습니까?")) return
 
-      this.$axios.delete(this.$serverUrl + '/posts/' + this.id, {
-        auth: {
-          username: 'june',
-          password: 1234
-        }
-      })
+      this.$axios.delete(this.$serverUrl + '/posts/' + this.id)
       .then(() => {
         alert('삭제되었습니다.')
         this.fnList();

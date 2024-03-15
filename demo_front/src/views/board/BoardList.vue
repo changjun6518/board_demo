@@ -101,12 +101,7 @@ export default {
       }
 
       this.$axios.get(this.$serverUrl + "/posts", {
-        params: this.requestBody,
-        auth: {
-          username: 'june',
-          password: 1234
-        },
-        headers: {}
+        params: this.requestBody
       }).then((res) => {
         console.log(res)
         if (res.data.resultCode === "OK") {
